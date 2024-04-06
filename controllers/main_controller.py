@@ -8,5 +8,7 @@ class MainController:
         self.model = None
 
     def open_leaderboard(self):
+        """On click handler for displaying leaderboard view
+        """
         ctrl = LeaderBoardController()
         self.view.present(custom_content=ctrl.view)

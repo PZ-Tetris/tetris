@@ -2,6 +2,12 @@ import tkinter as tk
 
 
 class PageButton(tk.Button):
+    """Custom button with basic app styling applied
+
+    Args:
+        tk (_type_): _description_
+    """
+
     def __init__(self, parent, text, command=None, image=None):
         super().__init__(parent)
         self.configure(background="#484969",
