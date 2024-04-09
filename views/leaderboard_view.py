@@ -1,21 +1,18 @@
 import tkinter as tk
 import tkinter.ttk as ttk
-import tkinter.font as tkFont
 from typing import List
 from PIL import ImageTk, Image
 
 from controls.page_button import PageButton
 from models.leaderboard_model import LeaderBoardModel
+from views.base_view import BaseView
 
 columns = ('Nick', 'Score')
 
 
-class LeaderBoardView(tk.Frame):
+class LeaderBoardView(BaseView):
     def __init__(self, controller):
-        super().__init__()
-        self.controller = controller
-        self.style()
-        self.present()
+        super().__init__(controller)
 
     def __configure_grid(self):
         self.columnconfigure(0, weight=1)
@@ -35,7 +32,8 @@ class LeaderBoardView(tk.Frame):
 
         sort_asc_button = PageButton(
             self, text="ASC", image=self.up_arrow_img, command=self.controller.sort_data_asc)
-        home_button = PageButton(self, text="Home", image=self.home_img)
+        home_button = PageButton(
+            self, text="Home", image=self.home_img, command=self.controller.back_to_main)
         sort_desc_button = PageButton(
             self, text="DESC", image=self.down_arrow_img, command=self.controller.sort_data_desc)
         sort_asc_button.grid(column=0, row=0, padx=10, pady=10)
@@ -62,9 +60,7 @@ class LeaderBoardView(tk.Frame):
         self.__clear_tab()
         self.__add_tab(ordering_mode)
 
-    def style(self):
-        self.configure(background='#D9D9D9')
-
     def present(self):
         self.__configure_grid()
         self.__add_widgets()
+        self.pack()

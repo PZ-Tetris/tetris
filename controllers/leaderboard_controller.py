@@ -3,8 +3,9 @@ from views.leaderboard_view import LeaderBoardView
 
 
 class LeaderBoardController:
-    def __init__(self):
+    def __init__(self, previousView):
         self.view = LeaderBoardView(self)
+        self.previousView = previousView
         self.model = None
 
     def get_data(self, ordering='DESC'):
@@ -29,3 +30,8 @@ class LeaderBoardController:
         """On click handler for sorting data in DESC order
         """
         self.view.recreate_tab('DESC')
+
+    def back_to_main(self):
+        self.previousView.present()
+        self.view.clear()
+        self.view.destroy()
