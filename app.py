@@ -5,8 +5,8 @@ import tkinter.font as tkFont
 
 
 class App(tk.Tk):
-    WINDOW_WIDTH = 680
-    WINDOW_HEIGHT = 400
+    WINDOW_WIDTH = 550
+    WINDOW_HEIGHT = 650
 
     def __init__(self):
         super().__init__()
@@ -30,6 +30,8 @@ class App(tk.Tk):
         window_geometry = helpers.calculate_center_of_screen_position(
             screen_width, screen_height, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
         self.geometry(window_geometry)
+
+        self.resizable(False, False)
 
     def present(self):
         main = MainController()
