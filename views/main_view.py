@@ -2,14 +2,12 @@ import tkinter as tk
 from PIL import ImageTk, Image
 
 from controls.page_button import PageButton
+from views.base_view import BaseView
 
 
-class MainView(tk.Frame):
+class MainView(BaseView):
     def __init__(self, controller):
-        super().__init__()
-        self.controller = controller
-        self.style()
-        self.present()
+        super().__init__(controller)
 
     def __configure_grid(self):
         self.columnconfigure(0, weight=1)
@@ -42,20 +40,7 @@ class MainView(tk.Frame):
         leaderboard_btn.grid(column=1, row=4, padx=1, pady=5)
         about_btn.grid(column=1, row=5, padx=1, pady=5)
 
-    def __show_main_content(self):
+    def present(self):
         self.__configure_grid()
         self.__add_widgets()
-
-    def style(self):
-        self.configure(background='#D9D9D9')
-
-    def clear(self):
-        self.destroy()
-        self.update_idletasks()
-
-    def present(self, custom_content=None):
-        if custom_content is not None:
-            self.clear()
-            custom_content.pack()
-        else:
-            self.__show_main_content()
+        self.pack()

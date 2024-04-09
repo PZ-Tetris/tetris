@@ -10,5 +10,6 @@ class MainController:
     def open_leaderboard(self):
         """On click handler for displaying leaderboard view
         """
-        ctrl = LeaderBoardController()
-        self.view.present(custom_content=ctrl.view)
+        ctrl = LeaderBoardController(self.view)
+        ctrl.view.present()
+        self.view.clear()
