@@ -39,169 +39,87 @@ class BlockGenerator():
             return None
         
     def generate_I_block(self):
-        first_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='cyan', outline='black', width=5)
-        second_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point + self.block_width, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 2,
-                                                         fill='cyan', outline='black', width=5)
-        third_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point + self.block_width * 2, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 3,
-                                                         fill='cyan', outline='black', width=5)
-        forth_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point + self.block_width * 3, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 4,
-                                                         fill='cyan', outline='black', width=5)
 
-        return Block(first_block_id, second_block_id, third_block_id, forth_block_id)
-    
+        blocks_coords = [
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 3],
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 3, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 4]
+        ]
+
+        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='cyan', outline='black', width=5) for block_coord in blocks_coords]
+        return Block(blocks_ids)
+
     def generate_J_block(self):
-        first_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='blue', outline='black', width=5)
-        second_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point + self.block_width, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 2,
-                                                         fill='blue', outline='black', width=5)
-        third_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point + self.block_width * 2, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 3,
-                                                         fill='blue', outline='black', width=5)
-        forth_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2 * 3,
-                                                         self.y_starting_point + self.block_width * 2, 
-                                                         self.x_starting_point - self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 3,
-                                                         fill='blue', outline='black', width=5)
 
-        return Block(first_block_id, second_block_id, third_block_id, forth_block_id)
+        blocks_coords = [
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 3],
+            [self.x_starting_point - self.block_width // 2 * 3, self.y_starting_point + self.block_width * 2, self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 3]
+        ]
+
+        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='blue', outline='black', width=5) for block_coord in blocks_coords]
+        return Block(blocks_ids)
     
     def generate_L_block(self):
-        first_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='orange', outline='black', width=5)
-        second_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point + self.block_width, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 2,
-                                                         fill='orange', outline='black', width=5)
-        third_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point + self.block_width * 2, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 3,
-                                                         fill='orange', outline='black', width=5)
-        forth_block_id = self.gameboard.create_rectangle(self.x_starting_point + self.block_width // 2,
-                                                         self.y_starting_point + self.block_width * 2, 
-                                                         self.x_starting_point + self.block_width // 2 * 3, 
-                                                         self.y_starting_point + self.block_width * 3,
-                                                         fill='orange', outline='black', width=5)
 
-        return Block(first_block_id, second_block_id, third_block_id, forth_block_id)
+        blocks_coords = [
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 3],
+            [self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2, self.x_starting_point + self.block_width // 2 * 3, self.y_starting_point + self.block_width * 3]
+        ]
+
+        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='orange', outline='black', width=5) for block_coord in blocks_coords]
+        return Block(blocks_ids)
     
     def generate_O_block(self):
-        first_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='yellow', outline='black', width=5)
-        second_block_id = self.gameboard.create_rectangle(self.x_starting_point,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point + self.block_width, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='yellow', outline='black', width=5)
-        third_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width,
-                                                         self.y_starting_point + self.block_width, 
-                                                         self.x_starting_point, 
-                                                         self.y_starting_point + self.block_width * 2,
-                                                         fill='yellow', outline='black', width=5)
-        forth_block_id = self.gameboard.create_rectangle(self.x_starting_point,
-                                                         self.y_starting_point + self.block_width, 
-                                                         self.x_starting_point + self.block_width, 
-                                                         self.y_starting_point + self.block_width * 2,
-                                                         fill='yellow', outline='black', width=5)
 
-        return Block(first_block_id, second_block_id, third_block_id, forth_block_id)
+        blocks_coords = [
+            [self.x_starting_point - self.block_width, self.y_starting_point, self.x_starting_point, self.y_starting_point + self.block_width],
+            [self.x_starting_point, self.y_starting_point, self.x_starting_point + self.block_width, self.y_starting_point + self.block_width],
+            [self.x_starting_point - self.block_width, self.y_starting_point + self.block_width, self.x_starting_point, self.y_starting_point + self.block_width * 2],
+            [self.x_starting_point, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width, self.y_starting_point + self.block_width * 2]
+        ]
+
+        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='yellow', outline='black', width=5) for block_coord in blocks_coords]
+        return Block(blocks_ids)
     
     def generate_S_block(self):
-        first_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='green', outline='black', width=5)
-        second_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point + self.block_width, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 2,
-                                                         fill='green', outline='black', width=5)
-        third_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2 * 3,
-                                                         self.y_starting_point + self.block_width, 
-                                                         self.x_starting_point - self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 2,
-                                                         fill='green', outline='black', width=5)
-        forth_block_id = self.gameboard.create_rectangle(self.x_starting_point + self.block_width // 2,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point + self.block_width // 2 * 3, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='green', outline='black', width=5)
 
-        return Block(first_block_id, second_block_id, third_block_id, forth_block_id)
+        blocks_coords = [
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
+            [self.x_starting_point - self.block_width // 2 * 3, self.y_starting_point + self.block_width, self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2],
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
+            [self.x_starting_point + self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2 * 3, self.y_starting_point + self.block_width]
+        ]
+
+        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='green', outline='black', width=5) for block_coord in blocks_coords]
+        return Block(blocks_ids)
+
     
     def generate_T_block(self):
-        first_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='purple', outline='black', width=5)
-        second_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point + self.block_width, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 2,
-                                                         fill='purple', outline='black', width=5)
-        third_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2 * 3,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point - self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='purple', outline='black', width=5)
-        forth_block_id = self.gameboard.create_rectangle(self.x_starting_point + self.block_width // 2,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point + self.block_width // 2 * 3, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='purple', outline='black', width=5)
 
-        return Block(first_block_id, second_block_id, third_block_id, forth_block_id)
+        blocks_coords = [
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
+            [self.x_starting_point - self.block_width // 2 * 3, self.y_starting_point + self.block_width, self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2],
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
+            [self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2 * 3, self.y_starting_point + self.block_width * 2]
+        ]
+
+        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='purple', outline='black', width=5) for block_coord in blocks_coords]
+        return Block(blocks_ids)
     
     def generate_Z_block(self):
-        first_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='red', outline='black', width=5)
-        second_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2,
-                                                         self.y_starting_point + self.block_width, 
-                                                         self.x_starting_point + self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width * 2,
-                                                         fill='red', outline='black', width=5)
-        third_block_id = self.gameboard.create_rectangle(self.x_starting_point + self.block_width // 2,
-                                                         self.y_starting_point + self.block_width, 
-                                                         self.x_starting_point + self.block_width // 2 * 3, 
-                                                         self.y_starting_point + self.block_width * 2,
-                                                         fill='red', outline='black', width=5)
-        forth_block_id = self.gameboard.create_rectangle(self.x_starting_point - self.block_width // 2 * 3,
-                                                         self.y_starting_point, 
-                                                         self.x_starting_point - self.block_width // 2, 
-                                                         self.y_starting_point + self.block_width,
-                                                         fill='red', outline='black', width=5)
 
-        return Block(first_block_id, second_block_id, third_block_id, forth_block_id)
+        blocks_coords = [
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
+            [self.x_starting_point - self.block_width // 2 * 3, self.y_starting_point + self.block_width, self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2],
+            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
+            [self.x_starting_point + self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2 * 3, self.y_starting_point + self.block_width]
+        ]
+
+        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='red', outline='black', width=5) for block_coord in blocks_coords]
+        return Block(blocks_ids)
+    
