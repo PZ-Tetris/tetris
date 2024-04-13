@@ -2,6 +2,7 @@ import tkinter as tk
 
 from controls.page_button import PageButton
 from views.base_view import BaseView
+from widgets.game_canvas import *
 
 
 class GameView(BaseView):
@@ -20,7 +21,13 @@ class GameView(BaseView):
 
         score_label = tk.Label(self, text="Actual score: 0")
 
-        canvas = tk.Canvas(self, width=350, height=500, background='gray75')
+        canvas = GameCanvas(self,
+                            board_width=10,
+                            board_height=20,
+                            block_size=25,
+                            background='gray75')
+        canvas.update_grid([[BlockColor(0), BlockColor(1), BlockColor(2), BlockColor(3), BlockColor(4), BlockColor(5), BlockColor(6), BlockColor(0), BlockColor(1), BlockColor(2)],
+                            [BlockColor(1), BlockColor(2), BlockColor(3), BlockColor(4), BlockColor(5), BlockColor(6), BlockColor(0), BlockColor(1), BlockColor(2), BlockColor(3)]])
 
         save_button.grid(column=0, row=0, sticky='w', pady=10)
         restart_button.grid(column=1, row=0, pady=10)
