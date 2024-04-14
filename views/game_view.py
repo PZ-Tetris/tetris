@@ -2,6 +2,8 @@ import tkinter as tk
 
 from controls.page_button import PageButton
 from views.base_view import BaseView
+from entities.gameboard_entity import Gameboard
+from interactors.generate_next_block import BlockGenerator
 
 
 class GameView(BaseView):
@@ -18,9 +20,13 @@ class GameView(BaseView):
         back_button = PageButton(
             self, text="Home", command=self.controller.back_to_main)
 
-        score_label = tk.Label(self, text="Actual score: 0")
+        score_label = tk.Label(self, text="Score: 0")
 
-        canvas = tk.Canvas(self, width=350, height=500, background='gray75')
+        self.canvas = Gameboard(self, width=350, height=500)
+        self.block_generator = BlockGenerator(self.canvas)
+
+        # PLACEHOLDER NEXT LINE
+        self.block_generator.generate_next_block()
 
         save_button.grid(column=0, row=0, sticky='w', pady=10)
         restart_button.grid(column=1, row=0, pady=10)
@@ -28,7 +34,7 @@ class GameView(BaseView):
 
         score_label.grid(column=1, row=1)
 
-        canvas.grid(column=0, columnspan=3, row=2, pady=10)
+        self.canvas.grid(column=0, columnspan=3, row=2, pady=10)
 
     def present(self):
         self.__add_widgets()
