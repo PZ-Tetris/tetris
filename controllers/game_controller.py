@@ -9,8 +9,11 @@ class GameController:
     def save_result(self):
         pass
 
+    # PLACEHOLDER METHOD TO SHOW ALL BLOCKS
     def restart(self):
         pass
+        self.view.clear()
+        self.view = GameView(self)
 
     def back_to_main(self):
         self.previousView.present()
