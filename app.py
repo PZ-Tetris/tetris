@@ -1,3 +1,4 @@
+import sys
 import tkinter as tk
 from controllers.main_controller import MainController
 import helpers.window as helpers
@@ -16,7 +17,8 @@ class App(tk.Tk):
 
     def style(self):
         self.title("PZ - Tetris")
-        self.iconbitmap('@/../assets/icon.ico')
+        self.iconbitmap(
+            './assets/icon.ico' if sys.platform.startswith('win') else '@./assets/icon.xbm')
         self.configure(background='#D9D9D9')
 
         if "Calibri" in tkFont.families():
