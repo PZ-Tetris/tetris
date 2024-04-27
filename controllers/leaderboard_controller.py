@@ -8,7 +8,7 @@ class LeaderBoardController:
         self.previousView = previousView
         self.model = None
 
-    def get_data(self, ordering='DESC'):
+    def get_data(self, ordering='DESC', col='score'):
         """Method for retrieving leaderboard data and sorting it accordingly to user choice
 
         Args:
@@ -19,17 +19,31 @@ class LeaderBoardController:
         """
         with LeaderBoardDataAccess() as data_access:
             data = data_access.get_all()
-            return sorted(data, key=lambda d: -int(d.score) if ordering == 'DESC' else int(d.score))
 
-    def sort_data_asc(self):
-        """On click handler for sorting data in ASC order
+            if col == 'score':
+                return sorted(data, key=lambda d: -int(d.score) if ordering == 'DESC' else int(d.score))
+            else:
+                return sorted(data, key=lambda d: d.nick if ordering == 'DESC' else d.nick)
+
+    def sort_score_data_asc(self):
+        """On click handler for sorting data by score in ASC order
         """
         self.view.recreate_tab('ASC')
 
-    def sort_data_desc(self):
-        """On click handler for sorting data in DESC order
+    def sort_score_data_desc(self):
+        """On click handler for sorting data by score in DESC order
         """
         self.view.recreate_tab('DESC')
+
+    def sort_nick_data_asc(self):
+        """On click handler for sorting data by nick in ASC order
+        """
+        self.view.recreate_tab('ASC', 'nick')
+
+    def sort_nick_data_desc(self):
+        """On click handler for sorting data by nick in DESC order
+        """
+        self.view.recreate_tab('DESC', 'nick')
 
     def back_to_main(self):
         self.previousView.present()
