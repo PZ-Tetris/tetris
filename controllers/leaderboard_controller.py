@@ -21,29 +21,14 @@ class LeaderBoardController:
             data = data_access.get_all()
 
             if col == 'score':
-                return sorted(data, key=lambda d: -int(d.score) if ordering == 'DESC' else int(d.score))
+                return sorted(data, key=lambda d: int(d.score), reverse=(ordering == 'DESC'))
             else:
-                return sorted(data, key=lambda d: d.nick if ordering == 'DESC' else d.nick)
+                return sorted(data, key=lambda d: d.nick, reverse=(ordering == 'ASC'))
 
-    def sort_score_data_asc(self):
-        """On click handler for sorting data by score in ASC order
+    def sort_data(self, ordering, column):
+        """On click handler for sorting data by column
         """
-        self.view.recreate_tab('ASC')
-
-    def sort_score_data_desc(self):
-        """On click handler for sorting data by score in DESC order
-        """
-        self.view.recreate_tab('DESC')
-
-    def sort_nick_data_asc(self):
-        """On click handler for sorting data by nick in ASC order
-        """
-        self.view.recreate_tab('ASC', 'nick')
-
-    def sort_nick_data_desc(self):
-        """On click handler for sorting data by nick in DESC order
-        """
-        self.view.recreate_tab('DESC', 'nick')
+        self.view.recreate_tab(ordering, column)
 
     def back_to_main(self):
         self.previousView.present()
