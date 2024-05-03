@@ -10,7 +10,6 @@ class GameController:
         pass
 
     # PLACEHOLDER METHOD TO SHOW ALL BLOCKS
-    # PLACEHOLDER METHOD TO SHOW ALL BLOCKS
     def restart(self):
         self.view.clear()
         self.view = GameView(self)

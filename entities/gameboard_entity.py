@@ -9,5 +9,5 @@ class Gameboard(tk.Canvas):
         self.block_width = 25
         self.game_matrix_width = width // self.block_width
         self.game_matrix_height = height // self.block_width
-        self.game_matrix = [[(0, '', 'na')] * self.game_matrix_width for _ in range(self.game_matrix_height)] # non-active(na) or active(a)
+        self.game_matrix = [[(False, '', False)] * self.game_matrix_width for _ in range(self.game_matrix_height)] # Values: [Is the block filled?, Block color, Is the block active? (currently moving)]
         self.active_block = None

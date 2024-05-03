@@ -47,7 +47,7 @@ class GameView(BaseView):
 
     def update(self):
         # Check if all blocks are inactive
-        all_inactive = all(self.canvas.game_matrix[i][j][2] == 'na'
+        all_inactive = all(self.canvas.game_matrix[i][j][2] == False
                         for i in range(self.canvas.game_matrix_height)
                         for j in range(self.canvas.game_matrix_width))
 
