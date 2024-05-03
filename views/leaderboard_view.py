@@ -3,12 +3,21 @@ import tkinter.ttk as ttk
 from typing import List
 from PIL import ImageTk, Image
 from functools import partial
+from enum import StrEnum, Enum, auto
 
 from controls.page_button import PageButton
 from models.leaderboard_model import LeaderBoardModel
 from views.base_view import BaseView
 
-columns = ('nick', 'score')
+
+class Column(StrEnum):
+    NICK = auto()
+    SCORE = auto()
+
+
+class Ordering(Enum):
+    ASC = False
+    DESC = True
 
 
 class LeaderBoardView(BaseView):
@@ -34,25 +43,25 @@ class LeaderBoardView(BaseView):
 
         self.__add_tab()
 
-    def __add_tab(self, ordering_mode='DESC', col='score'):
-        print(ordering_mode)
+    def __add_tab(self, ordering: Ordering = Ordering.DESC, ord_col: Column = Column.SCORE):
+
         arrow_down = ' ⇓'
         arrow_up = ' ⇑'
-        arrow = arrow_down if ordering_mode == 'ASC' else arrow_up
+        arrow = arrow_down if ordering.value else arrow_up
 
-        self.tab = ttk.Treeview(self, columns=columns, show='headings')
+        self.tab = ttk.Treeview(self, columns=list(Column), show='headings')
 
-        for name in columns:
-            is_selected = name.lower() == col
+        for column in Column:
+            is_selected = column is ord_col
             command = partial(self.controller.sort_data,
-                              'ASC' if is_selected and ordering_mode == 'DESC' else 'DESC',
-                              name)
-            self.tab.heading(column=name,
-                             text=name.capitalize() + arrow * int(is_selected),
+                              Ordering(not ordering.value or not is_selected),
+                              column)
+            self.tab.heading(column=column,
+                             text=column.capitalize() + arrow * int(is_selected),
                              command=command)
 
         data: List[LeaderBoardModel] = self.controller.get_data(
-            ordering_mode, col)
+            ordering, ord_col)
 
         for entry in data:
             self.tab.insert('', tk.END, values=str(entry))
@@ -62,9 +71,9 @@ class LeaderBoardView(BaseView):
     def __clear_tab(self):
         self.tab.destroy()
 
-    def recreate_tab(self, ordering_mode, col='score'):
+    def recreate_tab(self, ordering: Ordering, ord_col: Column):
         self.__clear_tab()
-        self.__add_tab(ordering_mode, col)
+        self.__add_tab(ordering, ord_col)
 
     def present(self):
         self.__configure_grid()

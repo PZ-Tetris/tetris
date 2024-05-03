@@ -1,5 +1,5 @@
 from helpers.leaderboard_data_access import LeaderBoardDataAccess
-from views.leaderboard_view import LeaderBoardView
+from views.leaderboard_view import LeaderBoardView, Column, Ordering
 
 
 class LeaderBoardController:
@@ -8,11 +8,12 @@ class LeaderBoardController:
         self.previousView = previousView
         self.model = None
 
-    def get_data(self, ordering='DESC', col='score'):
+    def get_data(self, ordering: Ordering, column: Column):
         """Method for retrieving leaderboard data and sorting it accordingly to user choice
 
         Args:
-            ordering (str, optional): ordering. Defaults to 'DESC'.
+            ordering (Ordering): order of sort
+            column (Column): column for ordering
 
         Returns:
             LeaderBoardModel[]: leaderboard results
@@ -20,12 +21,16 @@ class LeaderBoardController:
         with LeaderBoardDataAccess() as data_access:
             data = data_access.get_all()
 
-            if col == 'score':
-                return sorted(data, key=lambda d: int(d.score), reverse=(ordering == 'DESC'))
-            else:
-                return sorted(data, key=lambda d: d.nick, reverse=(ordering == 'ASC'))
+            match column:
+                case Column.NICK:
+                    return sorted(data, key=lambda d: d.nick, reverse=not ordering.value)
+                case Column.SCORE:
+                    return sorted(data, key=lambda d: int(d.score), reverse=ordering.value)
+                case _:
+                    print(f"ERROR: unexpected Column: {column}")
+                    return data
 
-    def sort_data(self, ordering, column):
+    def sort_data(self, ordering: Ordering, column: Column):
         """On click handler for sorting data by column
         """
         self.view.recreate_tab(ordering, column)
