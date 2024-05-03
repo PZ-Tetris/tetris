@@ -6,3 +6,8 @@ class Gameboard(tk.Canvas):
 
         self.width = width
         self.height = height
+        self.block_width = 25
+        self.game_matrix_width = width // self.block_width
+        self.game_matrix_height = height // self.block_width
+        self.game_matrix = [[(0, '', 'na')] * self.game_matrix_width for _ in range(self.game_matrix_height)] # non-active(na) or active(a)
+        self.active_block = None
