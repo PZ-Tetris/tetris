@@ -8,6 +8,7 @@ from interactors.generate_next_block import BlockGenerator
 from interactors.move_block_interactor import MoveBlockInteractor
 from interactors.rotate_block_interactor import RotateBlockInteractor
 from interactors.drop_block_interactor import DropBlockInteractor
+from interactors.pause_game_interactor import PauseGameInteractor
 
 class GameView(BaseView):
     def __init__(self, controller):
@@ -30,12 +31,14 @@ class GameView(BaseView):
         self.move_block_interactor = MoveBlockInteractor(self.canvas)
         self.rotate_block_interactor = RotateBlockInteractor(self.canvas)
         self.drop_block_interactor = DropBlockInteractor(self.canvas)
+        self.pause_game_interactor = PauseGameInteractor(self.canvas)
 
         self.bind_all('<Down>', self.move_block_interactor.move_block_down)
         self.bind_all('<Right>', self.move_block_interactor.move_block_right)
         self.bind_all('<Left>', self.move_block_interactor.move_block_left)
         self.bind_all('<Up>', self.rotate_block_interactor.rotate_block)
         self.bind_all('<space>', self.drop_block_interactor.drop_block)
+        self.bind_all('<p>', self.pause_game_interactor.toggle_pause)
 
         save_button.grid(column=0, row=0, sticky='w', pady=10)
         restart_button.grid(column=1, row=0, pady=10)
