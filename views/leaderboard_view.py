@@ -2,12 +2,22 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from typing import List
 from PIL import ImageTk, Image
+from functools import partial
+from enum import StrEnum, Enum, auto
 
 from controls.page_button import PageButton
 from models.leaderboard_model import LeaderBoardModel
 from views.base_view import BaseView
 
-columns = ('Nick', 'Score')
+
+class Column(StrEnum):
+    NICK = auto()
+    SCORE = auto()
+
+
+class Ordering(Enum):
+    ASC = False
+    DESC = True
 
 
 class LeaderBoardView(BaseView):
@@ -15,9 +25,6 @@ class LeaderBoardView(BaseView):
         super().__init__(controller)
 
     def __configure_grid(self):
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=1)
-        self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=5)
@@ -30,35 +37,43 @@ class LeaderBoardView(BaseView):
         self.home_img = ImageTk.PhotoImage(
             Image.open("assets/home.png"))
 
-        sort_asc_button = PageButton(
-            self, text="ASC", image=self.up_arrow_img, command=self.controller.sort_data_asc)
         home_button = PageButton(
             self, text="Home", image=self.home_img, command=self.controller.back_to_main)
-        sort_desc_button = PageButton(
-            self, text="DESC", image=self.down_arrow_img, command=self.controller.sort_data_desc)
-        sort_asc_button.grid(column=0, row=0, padx=10, pady=10)
-        home_button.grid(column=1, row=0, padx=10, pady=10)
-        sort_desc_button.grid(column=2, row=0, padx=10, pady=10)
+        home_button.grid(column=2, row=0, padx=10, pady=10)
 
         self.__add_tab()
 
-    def __add_tab(self, ordering_mode='DESC'):
-        self.tab = ttk.Treeview(self, columns=columns, show='headings')
-        self.tab.heading('Nick', text='Nick')
-        self.tab.heading('Score', text='Score')
-        data: List[LeaderBoardModel] = self.controller.get_data(ordering_mode)
+    def __add_tab(self, ordering: Ordering = Ordering.DESC, ord_col: Column = Column.SCORE):
+
+        arrow_down = ' ⇓'
+        arrow_up = ' ⇑'
+        arrow = arrow_down if ordering.value else arrow_up
+
+        self.tab = ttk.Treeview(self, columns=list(Column), show='headings')
+
+        for column in Column:
+            is_selected = column is ord_col
+            command = partial(self.controller.sort_data,
+                              Ordering(not ordering.value or not is_selected),
+                              column)
+            self.tab.heading(column=column,
+                             text=column.capitalize() + arrow * int(is_selected),
+                             command=command)
+
+        data: List[LeaderBoardModel] = self.controller.get_data(
+            ordering, ord_col)
 
         for entry in data:
             self.tab.insert('', tk.END, values=str(entry))
-        self.tab.grid(column=0, row=1, columnspan=3,
+        self.tab.grid(column=0, row=1, columnspan=5,
                       padx=10, pady=10, sticky="ew")
 
     def __clear_tab(self):
         self.tab.destroy()
 
-    def recreate_tab(self, ordering_mode):
+    def recreate_tab(self, ordering: Ordering, ord_col: Column):
         self.__clear_tab()
-        self.__add_tab(ordering_mode)
+        self.__add_tab(ordering, ord_col)
 
     def present(self):
         self.__configure_grid()
