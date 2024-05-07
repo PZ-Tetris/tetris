@@ -10,6 +10,7 @@ from interactors.rotate_block_interactor import RotateBlockInteractor
 from interactors.drop_block_interactor import DropBlockInteractor
 from interactors.pause_game_interactor import PauseGameInteractor
 
+
 class GameView(BaseView):
     def __init__(self, controller):
         super().__init__(controller)
@@ -57,14 +58,15 @@ class GameView(BaseView):
         # If all blocks are inactive, generate the next block
         if all_inactive:
             self.block_generator.generate_next_block()
+            self.rotate_block_interactor.rotated = False
 
         # Schedule the next call of this function in 1/30 second
         self.after(1000 // 30, self.update)
 
         # DEBUG: Print the game matrix to the console
         os.system('cls' if os.name == 'nt' else 'clear')
-        for i in range(20):
-            print(self.canvas.game_matrix[i])
+        #for i in range(20):
+           # print(self.canvas.game_matrix[i])
 
         self.canvas.delete("all")  # Remove everything from canvas
         for i in range(self.canvas.game_matrix_height):
