@@ -58,7 +58,7 @@ class GameView(BaseView):
         # If all blocks are inactive, generate the next block
         if all_inactive:
             self.block_generator.generate_next_block()
-            self.rotate_block_interactor.rotated = False
+            self.rotate_block_interactor.rotation_count = 0
 
         # Schedule the next call of this function in 1/30 second
         self.after(1000 // 30, self.update)
