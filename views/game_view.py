@@ -40,6 +40,7 @@ class GameView(BaseView):
         self.bind_all('<Up>', self.rotate_block_interactor.rotate_block)
         self.bind_all('<space>', self.drop_block_interactor.drop_block)
         self.bind_all('<p>', self.pause_game_interactor.toggle_pause)
+        self.bind_all('<P>', self.pause_game_interactor.toggle_pause)
 
         save_button.grid(column=0, row=0, sticky='w', pady=10)
         restart_button.grid(column=1, row=0, pady=10)
