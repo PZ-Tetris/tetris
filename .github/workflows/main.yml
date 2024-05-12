@@ -3,7 +3,7 @@ on:
   push:
     branches: [deploy]
 jobs:
-  build-app:
+  build-app-windows:
     permissions: write-all
     runs-on: windows-2019
     steps:
