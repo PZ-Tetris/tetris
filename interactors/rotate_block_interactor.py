@@ -328,72 +328,81 @@ class RotateBlockInteractor():
         # I-type Block
         if self.block_type == 'I':
             if self.rotation_count == 0:
-                conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 2][0],)
-                conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 1][0],)
                 if min(y_coordinates) == 0:
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] + 1][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] + 2][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] + 3][0],)
                     y_value = 2
                 elif min(y_coordinates) == 1:
-                    if self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 1][0]:
-                        conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] + 1][0],)
-                        return x_value, y_value, conditions
-                    else:
-                        y_value = 1
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] + 1][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] + 2][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 1][0],)
+                    y_value = 1
                 elif max(y_coordinates) == self.gameboard.game_matrix_width - 1:
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 1][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 2][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 3][0],)
                     y_value = -1
                 else:
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 1][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 2][0],)
                     conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] + 1][0],)
-                    return x_value, y_value, conditions
-
-                return x_value, y_value, ()
+                return x_value, y_value, conditions
             elif self.rotation_count == 1:
-                conditions = ()
                 if max(x_coordinates) == self.gameboard.game_matrix_height - 1:
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0] - 1][active_blocks[0][1]][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0] - 2][active_blocks[0][1]][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0] - 3][active_blocks[0][1]][0],)
                     x_value = -3
                 elif max(x_coordinates) == self.gameboard.game_matrix_height - 2:
-                    if self.gameboard.game_matrix[19][active_blocks[2][1]][0]:
-                        conditions += (self.gameboard.game_matrix[active_blocks[2][0] + 1][active_blocks[2][1]][0],)
-                        return x_value, y_value, conditions
-                    else:
-                        x_value = -2
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0] - 1][active_blocks[0][1]][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0] - 2][active_blocks[0][1]][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0] + 1][active_blocks[0][1]][0],)
+                    x_value = -2
                 elif max(x_coordinates) == self.gameboard.game_matrix_height - 3:
-                    if (self.gameboard.game_matrix[18][active_blocks[2][1]][0]
-                            or self.gameboard.game_matrix[18][active_blocks[2][1]][0]):
-                        conditions += (self.gameboard.game_matrix[active_blocks[2][0] + 2][active_blocks[2][1]][0],)
-                        conditions += (self.gameboard.game_matrix[active_blocks[2][0] + 3][active_blocks[2][1]][0],)
-                        return x_value, y_value, conditions
-                    else:
-                        x_value = -1
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0] - 1][active_blocks[0][1]][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0] + 1][active_blocks[0][1]][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0] + 2][active_blocks[0][1]][0],)
+                    x_value = -1
                 else:
                     conditions += (self.gameboard.game_matrix[active_blocks[2][0] + 1][active_blocks[2][1]][0],)
                     conditions += (self.gameboard.game_matrix[active_blocks[2][0] + 2][active_blocks[2][1]][0],)
                     conditions += (self.gameboard.game_matrix[active_blocks[2][0] + 3][active_blocks[2][1]][0],)
-                    return x_value, y_value, conditions
-                return x_value, y_value, ()
+                return x_value, y_value, conditions
         # J-type Block
         elif self.block_type == 'J':
             if self.rotation_count == 0:
                 if max(y_coordinates) == self.gameboard.game_matrix_width - 1:
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 2][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[1][0]][active_blocks[1][1] - 2][0],)
                     y_value = -1
                 else:
                     conditions += (self.gameboard.game_matrix[active_blocks[1][0]][active_blocks[1][1] + 1][0],)
                     conditions += (self.gameboard.game_matrix[active_blocks[2][0] - 1][active_blocks[2][1]][0],)
                     conditions += (self.gameboard.game_matrix[active_blocks[2][0] - 2][active_blocks[2][1]][0],)
                 return x_value, y_value, conditions
-
             elif self.rotation_count == 1:
                 if max(x_coordinates) == self.gameboard.game_matrix_height - 1:
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0] + 1][active_blocks[0][1]][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[2][0] + 2][active_blocks[2][1]][0],)
                     x_value = -1
                 else:
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] + 1][0],)
                     conditions += (self.gameboard.game_matrix[active_blocks[1][0] + 1][active_blocks[1][1]][0],)
                 return x_value, y_value, conditions
             elif self.rotation_count == 2:
-                conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 1][0],)
-                conditions += (self.gameboard.game_matrix[active_blocks[1][0] + 1][active_blocks[1][1]][0],)
                 if min(y_coordinates) == 0:
+                    conditions += (self.gameboard.game_matrix[active_blocks[1][0]][active_blocks[1][1] + 1][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[2][0]][active_blocks[2][1] + 2][0],)
                     y_value = 1
+                else:
+                    conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 1][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[1][0] + 1][active_blocks[1][1]][0],)
                 return x_value, y_value, conditions
             elif self.rotation_count == 3:
                 if max(x_coordinates) == self.gameboard.game_matrix_height - 1:
+                    conditions += (self.gameboard.game_matrix[active_blocks[1][0] + 1][active_blocks[1][1]][0],)
+                    conditions += (self.gameboard.game_matrix[active_blocks[2][0]][active_blocks[2][1] + 1][0],)
                     x_value = -1
                 else:
                     conditions += (self.gameboard.game_matrix[active_blocks[1][0] + 2][active_blocks[1][1]][0],)
