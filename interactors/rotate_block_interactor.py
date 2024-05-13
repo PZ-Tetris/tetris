@@ -334,6 +334,7 @@ class RotateBlockInteractor():
                     y_value = 2
                 elif min(y_coordinates) == 1:
                     if self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] - 1][0]:
+                        conditions += (self.gameboard.game_matrix[active_blocks[0][0]][active_blocks[0][1] + 1][0],)
                         return x_value, y_value, conditions
                     else:
                         y_value = 1

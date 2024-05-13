@@ -17,7 +17,6 @@ class GameView(BaseView):
         super().__init__(controller)
         self.controls_active = None
         self.paused = None
-        self.controls_active = None
 
     def __add_widgets(self):
         self.columnconfigure([0, 1, 2], minsize=165)
