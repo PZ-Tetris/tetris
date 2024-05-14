@@ -92,7 +92,7 @@ class GameView(BaseView):
             self.after(1000 // 30, self.update)
 
             # DEBUG: Print the game matrix to the console
-            os.system('cls' if os.name == 'nt' else 'clear')
+            # os.system('cls' if os.name == 'nt' else 'clear')
             # for i in range(20):
             # print(self.canvas.game_matrix[i])
 

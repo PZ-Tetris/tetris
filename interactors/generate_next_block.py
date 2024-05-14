@@ -41,19 +41,19 @@ class BlockGenerator():
     def generate_I_block(self):
 
         for i in range(4):
-            self.gameboard.game_matrix[i][7] = True, 'cyan', True
+            self.gameboard.game_matrix[0][5 + i] = True, 'cyan', True
 
     def generate_J_block(self):
 
         for i in range(3):
-            self.gameboard.game_matrix[i][7] = True, 'blue', True
-        self.gameboard.game_matrix[2][6] = True, 'blue', True
+            self.gameboard.game_matrix[1][6 + i] = True, 'blue', True
+        self.gameboard.game_matrix[0][6] = True, 'blue', True
     
     def generate_L_block(self):
 
         for i in range(3):
-            self.gameboard.game_matrix[i][6] = True, 'orange', True
-        self.gameboard.game_matrix[2][7] = True, 'orange', True
+            self.gameboard.game_matrix[1][6 + i] = True, 'orange', True
+        self.gameboard.game_matrix[0][8] = True, 'orange', True
     
     def generate_O_block(self):
 
@@ -64,18 +64,18 @@ class BlockGenerator():
     
     def generate_S_block(self):
 
-        self.gameboard.game_matrix[0][6] = True, 'green', True
         self.gameboard.game_matrix[1][6] = True, 'green', True
         self.gameboard.game_matrix[1][7] = True, 'green', True
-        self.gameboard.game_matrix[2][7] = True, 'green', True
+        self.gameboard.game_matrix[0][7] = True, 'green', True
+        self.gameboard.game_matrix[0][8] = True, 'green', True
 
     
     def generate_T_block(self):
 
-        self.gameboard.game_matrix[0][5] = True, 'purple', True
-        self.gameboard.game_matrix[0][6] = True, 'purple', True
         self.gameboard.game_matrix[0][7] = True, 'purple', True
         self.gameboard.game_matrix[1][6] = True, 'purple', True
+        self.gameboard.game_matrix[1][7] = True, 'purple', True
+        self.gameboard.game_matrix[1][8] = True, 'purple', True
     
     def generate_Z_block(self):
 
