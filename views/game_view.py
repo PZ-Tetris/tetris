@@ -14,9 +14,15 @@ from entities.block_entity import Block
 
 class GameView(BaseView):
     def __init__(self, controller):
+        self.controls_active = True
+        self.paused = False
+        self.move_block_down_counter = -1
+        self.score = 0
+        self.frames_delay = [48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 4, 3, 2, 1]
+        self.frame_delay_multiplier = 16.66
+        self.level = 0
+        self.lines = 0
         super().__init__(controller)
-        self.controls_active = None
-        self.paused = None
 
     def __add_widgets(self):
         self.columnconfigure([0, 1, 2], minsize=165)
@@ -28,7 +34,7 @@ class GameView(BaseView):
         back_button = PageButton(
             self, text="Home", command=self.controller.back_to_main)
 
-        score_label = tk.Label(self, text="Score: 0")
+        self.score_label = tk.Label(self, text="Score: 0")
 
         self.canvas = Gameboard(self, width=350, height=500)
         self.block_generator = BlockGenerator(self.canvas)
@@ -50,7 +56,7 @@ class GameView(BaseView):
         save_button.grid(column=0, row=0, sticky='w', pady=10)
         restart_button.grid(column=1, row=0, pady=10)
         back_button.grid(column=2, row=0, sticky='e', pady=10)
-        score_label.grid(column=1, row=1)
+        self.score_label.grid(column=1, row=1)
         self.canvas.grid(column=0, columnspan=3, row=2, pady=10)
 
     def pause_game(self, event=None):
@@ -58,15 +64,18 @@ class GameView(BaseView):
         if self.paused:
             self.controls_active = False
             self.pause_game_interactor.show_paused_message()
+            self.move_block_down_counter = -1
         else:
             self.pause_game_interactor.hide_paused_message()
             self.controls_active = True
             self.update()
+            self.move_block_down(0)
 
     def handle_keypress(self, event):
         if self.controls_active:
             if event.keysym == 'Down':
                 self.move_block_interactor.move_block_down(event)
+                self.score += 1
             elif event.keysym == 'Right':
                 self.move_block_interactor.move_block_right(event)
             elif event.keysym == 'Left':
@@ -85,11 +94,31 @@ class GameView(BaseView):
 
             # If all blocks are inactive, generate the next block
             if all_inactive:
+                line_detected = True
+                start = 19
+                line_combo = -1
+                while line_detected:
+                    line_detected, start = self.line_checker(start)
+                    self.drop_blocks_from(start)
+                    line_combo += 1
+                if line_combo != 0:
+                    self.lines += line_combo
+                    self.score += (100 + (line_combo - 1) * 200) * (self.level + 1)
+
                 self.block_generator.generate_next_block()
                 self.rotate_block_interactor.rotation_count = 0
 
+            first_criteria = self.level * 10 + 10
+            second_criteria = max(100, self.level * 10 - 50)
+            if self.lines >= first_criteria:
+                self.lines -= first_criteria
+                self.level += 1
+            elif self.lines >= second_criteria:
+                self.lines -= second_criteria
+                self.level += 1
+
             # Schedule the next call of this function in 1/30 second
-            self.after(1000 // 30, self.update)
+            self.after(5, self.update)
 
             # DEBUG: Print the game matrix to the console
             # os.system('cls' if os.name == 'nt' else 'clear')
@@ -107,7 +136,43 @@ class GameView(BaseView):
                         y2 = y1 + self.canvas.block_width
                         self.canvas.create_rectangle(x1, y1, x2, y2, fill=block_type)  # Draw the block
 
+            self.score_label.config(text=f"Score: {self.score}, level: {self.level}, lines: {self.lines}")
+
+    def move_block_down(self, counter):
+        if self.move_block_down_counter + 1 == counter:
+            if 0 <= self.level <= 9:
+                delay = int(self.frames_delay[self.level] * self.frame_delay_multiplier)
+            elif 10 <= self.level <= 18:
+                delay = int(self.frames_delay[10 + (self.level - 10) // 2] * self.frame_delay_multiplier)
+            elif 19 <= self.level <= 28:
+                delay = int(self.frames_delay[-2] * self.frame_delay_multiplier)
+            else:
+                delay = int(self.frames_delay[-1] * self.frame_delay_multiplier)
+
+            self.after(delay, lambda: self.move_block_down(counter + 1))
+            self.move_block_interactor.move_block_down(None)
+            self.move_block_down_counter += 1
+
+    def line_checker(self, start: int = 19):
+        for y in range(start, -1, -1):
+            line_detected = True
+            for x in range(14):
+                if not self.canvas.game_matrix[y][x][0]:
+                    line_detected = False
+                    break
+            if line_detected:
+                return True, y
+        return False, -1
+
+    def drop_blocks_from(self, start):
+        for y in range(start, 0, -1):
+            for x in range(14):
+                self.canvas.game_matrix[y][x] = (self.canvas.game_matrix[y - 1][x][0],
+                                                 self.canvas.game_matrix[y - 1][x][1],
+                                                 self.canvas.game_matrix[y - 1][x][2])
+
     def present(self):
         self.__add_widgets()
         self.update()
+        self.move_block_down(0)
         self.pack()
