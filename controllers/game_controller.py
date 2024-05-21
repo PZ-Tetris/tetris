@@ -19,6 +19,7 @@ class GameController:
         ctrl = SaveScoreController()
         ctrl.view.present()
         self.view.clear()
+        self.view.destroy()
 
     def back_to_main(self):
         self.previousView.present()

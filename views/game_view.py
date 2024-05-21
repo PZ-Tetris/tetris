@@ -53,7 +53,6 @@ class GameView(BaseView):
         self.bind_all('<space>', self.handle_keypress)
         self.bind_all('<p>', self.pause_game)
         self.bind_all('<P>', self.pause_game)
-        self.bind_all('<KeyPress>', self.any_key)
 
         save_button.grid(column=0, row=0, sticky='w', pady=10)
         restart_button.grid(column=1, row=0, pady=10)
@@ -243,6 +242,14 @@ class GameView(BaseView):
     def end_game(self):
         self.game_ended = True
         self.controls_active = False
+        self.unbind_all('<Down>')
+        self.unbind_all('<Right>')
+        self.unbind_all('<Left>')
+        self.unbind_all('<Up>')
+        self.unbind_all('<space>')
+        self.unbind_all('<p>')
+        self.unbind_all('<P>')
+        self.bind_all('<KeyPress>', self.any_key)
 
     def present(self):
         self.__add_widgets()

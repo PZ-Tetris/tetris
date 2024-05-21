@@ -8,17 +8,11 @@ from views.base_view import BaseView
 class SaveScoreView(BaseView):
     def __init__(self, controller):
         super().__init__(controller)
+        self.unbind_all('<KeyPress>')
 
     def __add_widgets(self):
-        back_button = PageButton(
-            self, text="Home", command=self.controller.back_to_main)
-        frame = tkinterweb.HtmlFrame(self, messages_enabled=False)
-
-        # load a website
-        frame.load_website(
-            "https://github.com/PZ-Tetris/tetris/blob/master/README.md")
-        back_button.grid(column=0, row=0)
-        frame.grid(column=0, row=1, columnspan=2)
+        self.text_input = tk.Text(self, height=1, width=25)
+        self.text_input.grid(column=0, row=0)
 
     def present(self):
         self.__add_widgets()
