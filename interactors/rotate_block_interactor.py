@@ -230,7 +230,6 @@ class RotateBlockInteractor():
                          if self.gameboard.game_matrix[i][j][2]]
 
         center = self.tetromino_center(active_blocks)
-        print(active_blocks)
 
         new_block_type = self.check_type_of_block(active_blocks[0])
         if self.block_type != new_block_type:
@@ -242,7 +241,6 @@ class RotateBlockInteractor():
             self.rotation_count = (self.rotation_count + 1) % 4
             self.removing_active_block(active_blocks)
             self.generate_tetromino((center[0] + rotation_data[1][0], center[1] + rotation_data[1][1]))
-            print(rotation_data[1])
 
         return
         # Rotate block based on its type

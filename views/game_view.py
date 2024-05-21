@@ -22,6 +22,7 @@ class GameView(BaseView):
         self.frame_delay_multiplier = 16.66
         self.level = 0
         self.lines = 0
+        self.game_ended = False
         super().__init__(controller)
 
     def __add_widgets(self):
@@ -52,6 +53,7 @@ class GameView(BaseView):
         self.bind_all('<space>', self.handle_keypress)
         self.bind_all('<p>', self.pause_game)
         self.bind_all('<P>', self.pause_game)
+        self.bind_all('<KeyPress>', self.any_key)
 
         save_button.grid(column=0, row=0, sticky='w', pady=10)
         restart_button.grid(column=1, row=0, pady=10)
@@ -75,7 +77,7 @@ class GameView(BaseView):
         if self.controls_active:
             if event.keysym == 'Down':
                 self.move_block_interactor.move_block_down(event)
-                self.score += 1
+                self.score += 1 * (self.level + 1)
             elif event.keysym == 'Right':
                 self.move_block_interactor.move_block_right(event)
             elif event.keysym == 'Left':
@@ -83,9 +85,31 @@ class GameView(BaseView):
             elif event.keysym == 'Up':
                 self.rotate_block_interactor.rotate_block(event)
             elif event.keysym == 'space':
+                y1, x1 = self.y_drop_block()
                 self.drop_block_interactor.drop_block(event)
+                y2, x2 = self.y_drop_block(False, (y1, x1))
+                self.score += (y2 - y1) * (self.level + 1)
+
+    def any_key(self, event):
+        if self.game_ended:
+            print('AAAAAAAAAAAAAAAAAAAA')
+            self.controller.open_save_score()
 
     def update(self):
+        if self.game_ended:
+            game_over_text = "GAME OVER"
+            x = self.canvas.winfo_width() // 2
+            y = self.canvas.winfo_height() // 2 - 20
+            for offset in [(-2, 0), (2, 0), (0, -2), (0, 2)]:
+                self.canvas.create_text(x + offset[0], y + offset[1], text=game_over_text, font=("Helvetica", 36), fill="black")
+            self.canvas.create_text(x, y, text=game_over_text, font=("Helvetica", 36), fill="red")
+
+            press_any_key_text = "Press any key to continue"
+            y = self.canvas.winfo_height() // 2 + 20
+            for offset in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                self.canvas.create_text(x + offset[0], y + offset[1], text=press_any_key_text, font=("Helvetica", 18), fill="black")
+            self.canvas.create_text(x, y, text=press_any_key_text, font=("Helvetica", 18), fill="red")
+            return
         if not self.paused:
             # Check if all blocks are inactive
             all_inactive = all(self.canvas.game_matrix[i][j][2] == False
@@ -105,7 +129,10 @@ class GameView(BaseView):
                     self.lines += line_combo
                     self.score += (100 + (line_combo - 1) * 200) * (self.level + 1)
 
+                coords = self.get_spawn_blocks_space()
                 self.block_generator.generate_next_block()
+                if self.do_new_block_overlap(coords):
+                    self.end_game()
                 self.rotate_block_interactor.rotation_count = 0
 
             first_criteria = self.level * 10 + 10
@@ -117,15 +144,13 @@ class GameView(BaseView):
                 self.lines -= second_criteria
                 self.level += 1
 
-            # Schedule the next call of this function in 1/30 second
-            self.after(5, self.update)
-
             # DEBUG: Print the game matrix to the console
             # os.system('cls' if os.name == 'nt' else 'clear')
             # for i in range(20):
             # print(self.canvas.game_matrix[i])
 
             self.canvas.delete("all")  # Remove everything from canvas
+            self.draw_trace()
             for i in range(self.canvas.game_matrix_height):
                 for j in range(self.canvas.game_matrix_width):
                     value, block_type, status = self.canvas.game_matrix[i][j]
@@ -137,6 +162,9 @@ class GameView(BaseView):
                         self.canvas.create_rectangle(x1, y1, x2, y2, fill=block_type)  # Draw the block
 
             self.score_label.config(text=f"Score: {self.score}, level: {self.level}, lines: {self.lines}")
+
+            # Schedule the next call of this function in 1/30 second
+            self.after(10, self.update)
 
     def move_block_down(self, counter):
         if self.move_block_down_counter + 1 == counter:
@@ -164,12 +192,57 @@ class GameView(BaseView):
                 return True, y
         return False, -1
 
+    def y_drop_block(self, active: bool = True, coords: tuple = (0, 0)):
+        if active:
+            for y in range(20):
+                for x in range(14):
+                    if self.canvas.game_matrix[y][x][2]:
+                        return y, x
+        else:
+            for y in range(coords[0], 20):
+                if self.canvas.game_matrix[y][coords[1]][0]:
+                    return y, coords[1]
+        return -1, -1
+
+    def draw_trace(self):
+        xs = []
+        for x in range(14):
+            for y in range(20):
+                if self.canvas.game_matrix[y][x][2]:
+                    xs.append(x)
+                    break
+        for x in xs:
+            x1 = x * self.canvas.block_width
+            x2 = x1 + self.canvas.block_width
+            y1 = 0
+            y2 = self.canvas.height
+
+            self.canvas.create_rectangle(x1, y1, x2, y2, fill='gray')
+
     def drop_blocks_from(self, start):
         for y in range(start, 0, -1):
             for x in range(14):
                 self.canvas.game_matrix[y][x] = (self.canvas.game_matrix[y - 1][x][0],
                                                  self.canvas.game_matrix[y - 1][x][1],
                                                  self.canvas.game_matrix[y - 1][x][2])
+
+    def get_spawn_blocks_space(self):
+        coordinates = []
+        for y in range(2):
+            for x in range(5, 9):
+                if self.canvas.game_matrix[y][x][0] and not self.canvas.game_matrix[y][x][2]:
+                    coordinates.append((y, x))
+        return coordinates
+
+    def do_new_block_overlap(self, coordinates: list):
+        for y, x in coordinates:
+            if self.canvas.game_matrix[y][x][2]:
+                return True
+        return False
+
+    def end_game(self):
+        self.game_ended = True
+        self.controls_active = False
 
     def present(self):
         self.__add_widgets()
