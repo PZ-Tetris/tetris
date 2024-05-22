@@ -2,6 +2,12 @@ import cv2
 import numpy as np
 from PIL import ImageGrab
 from screeninfo import get_monitors
+from app import App
+from views.game_view import GameView
+from views.base_view import BaseView
+import tkinter as tk
+
+
 
 def get_screen_resolution():
     primary_monitor = get_monitors()[0]
@@ -26,8 +32,8 @@ def find_squares(min_area, max_area):
     
     gauss1 = cv2.GaussianBlur(gray,(5,5),0)
     cann = cv2.Canny(gauss1,100,200)
-    cv2.imshow('Square Detection', cann)
-    cv2.waitKey(0)
+    # cv2.imshow('Square Detection', cann)
+    # cv2.waitKey(0)
 
     print("Finding contours...")
     contours, _ = cv2.findContours(cann, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -45,9 +51,17 @@ def find_squares(min_area, max_area):
             if len(approx) == 4:
                 return screen, approx
         
+# print(sys.path)
+
+# baseView = BaseView(tk.Frame)
+# app = GameView()
+mainloop()
+
+
+
 
 min_area = 100
-max_area = 5000
+max_area = 50000
 
 print("Looking for squares...")
 
