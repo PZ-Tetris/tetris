@@ -64,7 +64,7 @@ class LeaderBoardView(BaseView):
             ordering, ord_col)
 
         for entry in data:
-            self.tab.insert('', tk.END, values=str(entry))
+            self.tab.insert('', tk.END, values=(entry.nick, entry.score))
         self.tab.grid(column=0, row=1, columnspan=5,
                       padx=10, pady=10, sticky="ew")
 
