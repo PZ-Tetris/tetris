@@ -91,8 +91,7 @@ class GameView(BaseView):
 
     def any_key(self, event):
         if self.game_ended:
-            print('AAAAAAAAAAAAAAAAAAAA')
-            self.controller.open_save_score()
+            self.controller.open_save_score(self.score)
 
     def update(self):
         if self.game_ended:
@@ -216,7 +215,7 @@ class GameView(BaseView):
             y1 = 0
             y2 = self.canvas.height
 
-            self.canvas.create_rectangle(x1, y1, x2, y2, fill='gray')
+            self.canvas.create_rectangle(x1, y1, x2, y2, fill='gray', width=0)
 
     def drop_blocks_from(self, start):
         for y in range(start, 0, -1):

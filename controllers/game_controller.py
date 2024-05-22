@@ -15,8 +15,8 @@ class GameController:
         self.view.clear()
         self.view = GameView(self)
 
-    def open_save_score(self):
-        ctrl = SaveScoreController()
+    def open_save_score(self, score):
+        ctrl = SaveScoreController(self.previousView, score)
         ctrl.view.present()
         self.view.clear()
         self.view.destroy()
