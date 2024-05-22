@@ -1,5 +1,4 @@
 import tkinter as tk
-import os
 
 from controls.page_button import PageButton
 from views.base_view import BaseView
@@ -9,7 +8,6 @@ from interactors.move_block_interactor import MoveBlockInteractor
 from interactors.rotate_block_interactor import RotateBlockInteractor
 from interactors.drop_block_interactor import DropBlockInteractor
 from interactors.pause_game_interactor import PauseGameInteractor
-from entities.block_entity import Block
 
 
 class GameView(BaseView):
@@ -161,7 +159,7 @@ class GameView(BaseView):
 
             self.score_label.config(text=f"Score: {self.score}, level: {self.level}, lines: {self.lines}")
 
-            # Schedule the next call of this function in 1/30 second
+            # Schedule the next call of this function
             self.after(10, self.update)
 
     def move_block_down(self, counter):
