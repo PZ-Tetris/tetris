@@ -34,7 +34,7 @@ class InstructionView(BaseView):
         back_button = PageButton(
             self, text="Home", command=self.controller.back_to_main)
         canvas = tk.Canvas(self, width=550, height=600)
-        self.show_pdf('doc.pdf', 1, canvas)
+        self.show_pdf('./assets/instruction.pdf', 0, canvas)
         back_button.grid(column=0, row=0)
         canvas.grid(column=0, row=1)
 
