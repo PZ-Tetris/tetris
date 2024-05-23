@@ -83,20 +83,12 @@ def find_squere():
 def run_app():
     # Uruchomienie innego skryptu
     relative_path = 'app.py'
-    subprocess.Popen(['python', relative_path])
+    process = subprocess.Popen(['python', relative_path])
+
+    time.sleep(10)
+    process.terminate()
 
 
-
-# Wczytaj obraz za pomocą OpenCV
-image = cv2.imread('play.jpg')
-
-# Sprawdź pierwszy piksel (0, 0)
-(b, g, r) = image[0, 0]
-
-if r > b:
-    print("Obraz jest w formacie BGR")
-else:
-    print("Obraz jest w formacie RGB")
 
 
 # Uruchomienie skryptu app.py jako osobny proces
