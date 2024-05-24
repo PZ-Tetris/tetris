@@ -1,6 +1,8 @@
+from helpers.leaderboard_data_access import LeaderBoardDataAccess
+from models.leaderboard_model import LeaderBoardModel
 from views.game_view import GameView
 from controllers.save_score_controller import SaveScoreController
-
+from tkinter import simpledialog
 
 class GameController:
     def __init__(self, previousView):
@@ -8,7 +10,12 @@ class GameController:
         self.previousView = previousView
 
     def save_result(self):
-        pass
+        user_nick = simpledialog.askstring('Save results', "What's your nick?")
+
+        if user_nick is not None:
+            with LeaderBoardDataAccess() as data_access:
+                data = LeaderBoardModel('', user_nick, 0)
+                data_access.insert(data)
 
     # PLACEHOLDER METHOD TO SHOW ALL BLOCKS
     def restart(self):
