@@ -1,8 +1,8 @@
 from helpers.leaderboard_data_access import LeaderBoardDataAccess
 from models.leaderboard_model import LeaderBoardModel
 from views.game_view import GameView
+from controllers.save_score_controller import SaveScoreController
 from tkinter import simpledialog
-
 
 class GameController:
     def __init__(self, previousView):
@@ -21,6 +21,12 @@ class GameController:
     def restart(self):
         self.view.clear()
         self.view = GameView(self)
+
+    def open_save_score(self, score):
+        ctrl = SaveScoreController(self.previousView, score)
+        ctrl.view.present()
+        self.view.clear()
+        self.view.destroy()
 
     def back_to_main(self):
         self.previousView.present()

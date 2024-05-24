@@ -1,4 +1,6 @@
 autopep8==2.0.4
 pycodestyle==2.11.1
 Pillow==10.3.0
-python-dotenv==1.0.1tkinterweb==3.23.8
+PyMuPDF==1.24.3
+PyMuPDFb==1.24.3
+python-dotenv==1.0.1
