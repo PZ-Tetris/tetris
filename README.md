@@ -10,6 +10,7 @@
 `python3 -m venv .venv --prompt tetris`
 
 `source .venv/bin/activate`
+`.venv/Scripts/activate`
 
 `pip install -r requirements.txt`
 
