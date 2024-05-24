@@ -4,7 +4,7 @@ from entities.gameboard_entity import Gameboard
 from entities.block_entity import Block
 
 class BlockGenerator():
-    def __init__(self, gameboard):
+    def __init__(self, gameboard: Gameboard):
         self.gameboard = gameboard
         self.x_starting_point = self.gameboard.width // 2
         self.y_starting_point = 15
@@ -40,86 +40,47 @@ class BlockGenerator():
         
     def generate_I_block(self):
 
-        blocks_coords = [
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 3],
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 3, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 4]
-        ]
-
-        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='cyan', outline='black', width=5) for block_coord in blocks_coords]
-        return Block(blocks_ids)
+        for i in range(4):
+            self.gameboard.game_matrix[0][5 + i] = True, 'cyan', True
 
     def generate_J_block(self):
 
-        blocks_coords = [
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 3],
-            [self.x_starting_point - self.block_width // 2 * 3, self.y_starting_point + self.block_width * 2, self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 3]
-        ]
-
-        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='blue', outline='black', width=5) for block_coord in blocks_coords]
-        return Block(blocks_ids)
+        for i in range(3):
+            self.gameboard.game_matrix[1][6 + i] = True, 'blue', True
+        self.gameboard.game_matrix[0][6] = True, 'blue', True
     
     def generate_L_block(self):
 
-        blocks_coords = [
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 3],
-            [self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2, self.x_starting_point + self.block_width // 2 * 3, self.y_starting_point + self.block_width * 3]
-        ]
-
-        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='orange', outline='black', width=5) for block_coord in blocks_coords]
-        return Block(blocks_ids)
+        for i in range(3):
+            self.gameboard.game_matrix[1][6 + i] = True, 'orange', True
+        self.gameboard.game_matrix[0][8] = True, 'orange', True
     
     def generate_O_block(self):
 
-        blocks_coords = [
-            [self.x_starting_point - self.block_width, self.y_starting_point, self.x_starting_point, self.y_starting_point + self.block_width],
-            [self.x_starting_point, self.y_starting_point, self.x_starting_point + self.block_width, self.y_starting_point + self.block_width],
-            [self.x_starting_point - self.block_width, self.y_starting_point + self.block_width, self.x_starting_point, self.y_starting_point + self.block_width * 2],
-            [self.x_starting_point, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width, self.y_starting_point + self.block_width * 2]
-        ]
-
-        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='yellow', outline='black', width=5) for block_coord in blocks_coords]
-        return Block(blocks_ids)
+        for i in range(2):
+            self.gameboard.game_matrix[i][6] = True, 'yellow', True
+        for i in range(2):
+            self.gameboard.game_matrix[i][7] = True, 'yellow', True
     
     def generate_S_block(self):
 
-        blocks_coords = [
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
-            [self.x_starting_point - self.block_width // 2 * 3, self.y_starting_point + self.block_width, self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2],
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
-            [self.x_starting_point + self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2 * 3, self.y_starting_point + self.block_width]
-        ]
-
-        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='green', outline='black', width=5) for block_coord in blocks_coords]
-        return Block(blocks_ids)
+        self.gameboard.game_matrix[1][6] = True, 'green', True
+        self.gameboard.game_matrix[1][7] = True, 'green', True
+        self.gameboard.game_matrix[0][7] = True, 'green', True
+        self.gameboard.game_matrix[0][8] = True, 'green', True
 
     
     def generate_T_block(self):
 
-        blocks_coords = [
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
-            [self.x_starting_point - self.block_width // 2 * 3, self.y_starting_point + self.block_width, self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2],
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
-            [self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2 * 3, self.y_starting_point + self.block_width * 2]
-        ]
-
-        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='purple', outline='black', width=5) for block_coord in blocks_coords]
-        return Block(blocks_ids)
+        self.gameboard.game_matrix[0][7] = True, 'purple', True
+        self.gameboard.game_matrix[1][6] = True, 'purple', True
+        self.gameboard.game_matrix[1][7] = True, 'purple', True
+        self.gameboard.game_matrix[1][8] = True, 'purple', True
     
     def generate_Z_block(self):
 
-        blocks_coords = [
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width],
-            [self.x_starting_point - self.block_width // 2 * 3, self.y_starting_point + self.block_width, self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width * 2],
-            [self.x_starting_point - self.block_width // 2, self.y_starting_point + self.block_width, self.x_starting_point + self.block_width // 2, self.y_starting_point + self.block_width * 2],
-            [self.x_starting_point + self.block_width // 2, self.y_starting_point, self.x_starting_point + self.block_width // 2 * 3, self.y_starting_point + self.block_width]
-        ]
-
-        blocks_ids = [self.gameboard.create_rectangle(*block_coord, fill='red', outline='black', width=5) for block_coord in blocks_coords]
-        return Block(blocks_ids)
+        self.gameboard.game_matrix[0][6] = True, 'red', True
+        self.gameboard.game_matrix[0][7] = True, 'red', True
+        self.gameboard.game_matrix[1][7] = True, 'red', True
+        self.gameboard.game_matrix[1][8] = True, 'red', True
     
