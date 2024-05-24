@@ -1,6 +1,7 @@
 from controllers.leaderboard_controller import LeaderBoardController
 from controllers.game_controller import GameController
 from controllers.about_controller import AboutController
+from controllers.instruction_controller import InstructionController
 from views.main_view import MainView
 
 
@@ -27,5 +28,12 @@ class MainController:
         """On click handler for displaying game view
         """
         ctrl = AboutController(self.view)
+        ctrl.view.present()
+        self.view.clear()
+
+    def open_instruction(self):
+        """On click handler for displaying instruction view
+        """
+        ctrl = InstructionController(self.view)
         ctrl.view.present()
         self.view.clear()

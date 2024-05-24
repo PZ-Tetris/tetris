@@ -19,7 +19,6 @@ class GameController:
 
     # PLACEHOLDER METHOD TO SHOW ALL BLOCKS
     def restart(self):
-        pass
         self.view.clear()
         self.view = GameView(self)
 
