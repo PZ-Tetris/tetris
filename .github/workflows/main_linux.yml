@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Install Python
-        uses: actions/setup-python@v1   
+        uses: actions/setup-python@v1
         with:
           python-version: "3.9"
           architecture: "x64"
@@ -20,10 +20,13 @@ jobs:
       - name: Run PyInstaller
         run: |
           python -m PyInstaller --onefile --noconsole --name "tetris" app.py
+      - name: Pack the app
+        run: |
+          mv ./dist/tetris tetris && zip -r app.zip ./assets/ ./tetris
       - uses: actions/upload-artifact@v2
         with:
           name: linux_app
-          path: dist/tetris
+          path: app.zip
 
       - name: create release
         id: create_release
@@ -45,15 +48,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.create_release.outputs.upload_url}}
-          asset_path: dist/tetris
-          asset_name: tetris
+          asset_path: app.zip
+          asset_name: app
           asset_content_type: application/zip
-      - name: Upload static assets
-        id: upload-static-assets
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{steps.create_release.outputs.upload_url}}
-          asset_path: assets/
-          asset_name: assets
