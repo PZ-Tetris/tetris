@@ -9,12 +9,12 @@ class GameController:
         self.view = GameView(self)
         self.previousView = previousView
 
-    def save_result(self):
+    def save_result(self, score):
         user_nick = simpledialog.askstring('Save results', "What's your nick?")
 
         if user_nick is not None:
             with LeaderBoardDataAccess() as data_access:
-                data = LeaderBoardModel('', user_nick, 0)
+                data = LeaderBoardModel('', user_nick, score)
                 data_access.insert(data)
 
     # PLACEHOLDER METHOD TO SHOW ALL BLOCKS
