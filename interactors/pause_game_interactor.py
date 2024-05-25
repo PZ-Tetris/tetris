@@ -16,7 +16,7 @@ class PauseGameInteractor():
 
         additional_text = "(Press 'P' to unpause)"
         self.additional_label_id = self.gameboard.create_text(x, y + 30, text=additional_text,
-                                                              font=("Helvetica", 14), fill="gray")
+                                                              font=("Helvetica", 14), fill="black")
 
     def hide_paused_message(self):
         self.gameboard.delete(self.paused_label_id)

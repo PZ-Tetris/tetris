@@ -31,7 +31,7 @@ class MainView(BaseView):
         app_name_label = tk.Label(self, text="Tetris", background='#D9D9D9')
         image = tk.Label(self, image=self.home_img)
         play_btn = PageButton(
-            self, text="Play", command=self.controller.open_game)
+            self, text="Play", command=self.controller.open_game_mode_selection)
         leaderboard_btn = PageButton(
             self, text="Leaderboard", command=self.controller.open_leaderboard)
         about_btn = PageButton(

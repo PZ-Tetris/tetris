@@ -10,6 +10,9 @@
 `python3 -m venv .venv --prompt tetris`
 
 `source .venv/bin/activate`
+`.venv/Scripts/activate`
 
-`pip install -r requirement.txt`
+`pip install -r requirements.txt`
 
+## music
+https://pandabeatsmusic.com/

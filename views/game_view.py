@@ -1,6 +1,9 @@
+import random
+from time import time
 import tkinter as tk
 
 from controls.page_button import PageButton
+from helpers.sound_manager import MusicType, SoundManager
 from views.base_view import BaseView
 from entities.gameboard_entity import Gameboard
 from interactors.generate_next_block import BlockGenerator
@@ -11,7 +14,7 @@ from interactors.pause_game_interactor import PauseGameInteractor
 
 
 class GameView(BaseView):
-    def __init__(self, controller):
+    def __init__(self, controller, is_random):
         self.controls_active = True
         self.paused = False
         self.move_block_down_counter = -1
@@ -22,6 +25,15 @@ class GameView(BaseView):
         self.level = 0
         self.lines = 0
         self.game_ended = False
+        self.is_random = is_random
+        self.start_time = time()
+        self.elapsed_time = 0
+        self.random_speed = random.choice(self.frames_delay)
+        self.sound_manager = SoundManager()
+        if self.is_random:
+            self.sound_manager.play_music(MusicType.RANDOM)
+        else:
+            self.sound_manager.play_music(MusicType.STANDARD)
         super().__init__(controller)
 
     def __add_widgets(self):
@@ -32,7 +44,7 @@ class GameView(BaseView):
         restart_button = PageButton(
             self, text="Restart", command=self.controller.restart)
         back_button = PageButton(
-            self, text="Home", command=self.controller.back_to_main)
+            self, text="Back", command=self.controller.back_to_main)
 
         self.score_label = tk.Label(self, text="Score: 0")
 
@@ -65,11 +77,13 @@ class GameView(BaseView):
             self.controls_active = False
             self.pause_game_interactor.show_paused_message()
             self.move_block_down_counter = -1
+            self.sound_manager.pause_music()
         else:
             self.pause_game_interactor.hide_paused_message()
             self.controls_active = True
             self.update()
             self.move_block_down(0)
+            self.sound_manager.unpause_music()
 
     def handle_keypress(self, event):
         if self.controls_active:
@@ -90,6 +104,7 @@ class GameView(BaseView):
 
     def any_key(self, event):
         if self.game_ended:
+            self.sound_manager.play_music(MusicType.MENU)
             self.controller.open_save_score(self.score)
 
     def update(self):
@@ -100,9 +115,10 @@ class GameView(BaseView):
             for offset in [(-2, 0), (2, 0), (0, -2), (0, 2)]:
                 self.canvas.create_text(
                     x + offset[0], y + offset[1], text=game_over_text, font=("Helvetica", 36), fill="black")
-            self.canvas.create_text(
+                self.canvas.create_text(
                 x, y, text=game_over_text, font=("Helvetica", 36), fill="red")
-
+                
+            self.sound_manager.play_music(MusicType.OVER)
             press_any_key_text = "Press any key to continue"
             y = self.canvas.winfo_height() // 2 + 20
             for offset in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
@@ -111,6 +127,7 @@ class GameView(BaseView):
             self.canvas.create_text(
                 x, y, text=press_any_key_text, font=("Helvetica", 18), fill="red")
             return
+        
         if not self.paused:
             # Check if all blocks are inactive
             all_inactive = all(self.canvas.game_matrix[i][j][2] == False
@@ -172,17 +189,24 @@ class GameView(BaseView):
 
     def move_block_down(self, counter):
         if self.move_block_down_counter + 1 == counter:
-            if 0 <= self.level <= 9:
-                delay = int(
-                    self.frames_delay[self.level] * self.frame_delay_multiplier)
-            elif 10 <= self.level <= 18:
-                delay = int(
-                    self.frames_delay[10 + (self.level - 10) // 2] * self.frame_delay_multiplier)
-            elif 19 <= self.level <= 28:
-                delay = int(self.frames_delay[-2]
-                            * self.frame_delay_multiplier)
+            if self.is_random:
+                self.elapsed_time = time() - self.start_time
+                if self.elapsed_time >= 30:
+                    self.start_time = time()
+                    self.random_speed = random.choice(self.frames_delay)
+                delay = int(self.random_speed * self.frame_delay_multiplier)
             else:
-                delay = int(self.frames_delay[-1]
+                if 0 <= self.level <= 9:
+                    delay = int(
+                    self.frames_delay[self.level] * self.frame_delay_multiplier)
+                elif 10 <= self.level <= 18:
+                    delay = int(
+                    self.frames_delay[10 + (self.level - 10) // 2] * self.frame_delay_multiplier)
+                elif 19 <= self.level <= 28:
+                    delay = int(self.frames_delay[-2]
+                                * self.frame_delay_multiplier)
+                else:
+                    delay = int(self.frames_delay[-1]
                             * self.frame_delay_multiplier)
 
             self.after(delay, lambda: self.move_block_down(counter + 1))
