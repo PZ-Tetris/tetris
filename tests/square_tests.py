@@ -84,15 +84,14 @@ def run_app():
     # Uruchomienie innego skryptu
     relative_path = '../app.py'
     process = subprocess.Popen(['python', relative_path])
+    return process
 
-    time.sleep(10)
-    process.terminate()
 
 
 
 
 # Uruchomienie skryptu app.py jako osobny proces
-run_app()
+proces = run_app()
 
 # Pauza na 1 sekundę
 time.sleep(1)
@@ -105,6 +104,7 @@ thread1 = threading.Thread(target=change_view_to_game)
 thread1.start()
 
 # Czekanie na zakończenie wątku
+
 thread1.join()
 
 time.sleep(1)
@@ -112,4 +112,4 @@ thread2 = threading.Thread(target=find_squere())
 thread2.start()
 
 thread2.join()
-
+proces.terminate()
