@@ -82,7 +82,7 @@ def find_squere():
 
 def run_app():
     # Uruchomienie innego skryptu
-    relative_path = 'app.py'
+    relative_path = '../app.py'
     process = subprocess.Popen(['python', relative_path])
 
     time.sleep(10)
