@@ -56,7 +56,7 @@ class GameView(BaseView):
         save_button.grid(column=0, row=0, sticky='w', pady=10)
         restart_button.grid(column=1, row=0, pady=10)
         back_button.grid(column=2, row=0, sticky='e', pady=10)
-        self.score_label.grid(column=1, row=1)
+        self.score_label.grid(column=0, columnspan=3, row=1)
         self.canvas.grid(column=0, columnspan=3, row=2, pady=10)
 
     def pause_game(self, event=None):
