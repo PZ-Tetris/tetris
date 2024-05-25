@@ -19,7 +19,8 @@ class GameView(BaseView):
         self.paused = False
         self.move_block_down_counter = -1
         self.score = 0
-        self.frames_delay = [48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 4, 3, 2, 1]
+        self.frames_delay = [48, 43, 38, 33,
+                             28, 23, 18, 13, 8, 6, 5, 4, 3, 2, 1]
         self.frame_delay_multiplier = 16.66
         self.level = 0
         self.lines = 0
@@ -39,7 +40,7 @@ class GameView(BaseView):
         self.columnconfigure([0, 1, 2], minsize=165)
 
         save_button = PageButton(
-            self, text="Save result", command=self.controller.save_result)
+            self, text="Save result", command=lambda: self.controller.save_result(self.score))
         restart_button = PageButton(
             self, text="Restart", command=self.controller.restart)
         back_button = PageButton(
@@ -67,7 +68,7 @@ class GameView(BaseView):
         save_button.grid(column=0, row=0, sticky='w', pady=10)
         restart_button.grid(column=1, row=0, pady=10)
         back_button.grid(column=2, row=0, sticky='e', pady=10)
-        self.score_label.grid(column=1, row=1)
+        self.score_label.grid(column=0, columnspan=3, row=1)
         self.canvas.grid(column=0, columnspan=3, row=2, pady=10)
 
     def pause_game(self, event=None):
@@ -112,15 +113,18 @@ class GameView(BaseView):
             x = self.canvas.winfo_width() // 2
             y = self.canvas.winfo_height() // 2 - 20
             for offset in [(-2, 0), (2, 0), (0, -2), (0, 2)]:
-                self.canvas.create_text(x + offset[0], y + offset[1], text=game_over_text, font=("Helvetica", 36), fill="black")
-            self.canvas.create_text(x, y, text=game_over_text, font=("Helvetica", 36), fill="red")
+self.canvas.create_text(
+                    x + offset[0], y + offset[1], text=game_over_text, font=("Helvetica", 36), fill="black")
+            self.canvas.create_text(
+                x, y, text=game_over_text, font=("Helvetica", 36), fill="red")
             self.sound_manager.play_music(MusicType.OVER)
-
             press_any_key_text = "Press any key to continue"
             y = self.canvas.winfo_height() // 2 + 20
             for offset in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                self.canvas.create_text(x + offset[0], y + offset[1], text=press_any_key_text, font=("Helvetica", 18), fill="black")
-            self.canvas.create_text(x, y, text=press_any_key_text, font=("Helvetica", 18), fill="red")
+                self.canvas.create_text(
+                    x + offset[0], y + offset[1], text=press_any_key_text, font=("Helvetica", 18), fill="black")
+            self.canvas.create_text(
+                x, y, text=press_any_key_text, font=("Helvetica", 18), fill="red")
             return
         
         if not self.paused:
@@ -140,7 +144,8 @@ class GameView(BaseView):
                     line_combo += 1
                 if line_combo != 0:
                     self.lines += line_combo
-                    self.score += (100 + (line_combo - 1) * 200) * (self.level + 1)
+                    self.score += (100 + (line_combo - 1)
+                                   * 200) * (self.level + 1)
 
                 coords = self.get_spawn_blocks_space()
                 self.block_generator.generate_next_block()
@@ -172,9 +177,11 @@ class GameView(BaseView):
                         y1 = i * self.canvas.block_width
                         x2 = x1 + self.canvas.block_width
                         y2 = y1 + self.canvas.block_width
-                        self.canvas.create_rectangle(x1, y1, x2, y2, fill=block_type)  # Draw the block
+                        self.canvas.create_rectangle(
+                            x1, y1, x2, y2, fill=block_type)  # Draw the block
 
-            self.score_label.config(text=f"Score: {self.score}, level: {self.level}, lines: {self.lines}")
+            self.score_label.config(
+                text=f"Score: {self.score}, level: {self.level}, lines: {self.lines}")
 
             # Schedule the next call of this function
             self.after(10, self.update)
@@ -189,13 +196,17 @@ class GameView(BaseView):
                 delay = int(self.random_speed * self.frame_delay_multiplier)
             else:
                 if 0 <= self.level <= 9:
-                    delay = int(self.frames_delay[self.level] * self.frame_delay_multiplier)
-                elif 10 <= self.level <= 18:
-                    delay = int(self.frames_delay[10 + (self.level - 10) // 2] * self.frame_delay_multiplier)
-                elif 19 <= self.level <= 28:
-                    delay = int(self.frames_delay[-2] * self.frame_delay_multiplier)
-                else:
-                    delay = int(self.frames_delay[-1] * self.frame_delay_multiplier)
+                delay = int(
+                    self.frames_delay[self.level] * self.frame_delay_multiplier)
+            elif 10 <= self.level <= 18:
+                delay = int(
+                    self.frames_delay[10 + (self.level - 10) // 2] * self.frame_delay_multiplier)
+            elif 19 <= self.level <= 28:
+                delay = int(self.frames_delay[-2]
+                            * self.frame_delay_multiplier)
+            else:
+                delay = int(self.frames_delay[-1]
+                            * self.frame_delay_multiplier)
 
             self.after(delay, lambda: self.move_block_down(counter + 1))
             self.move_block_interactor.move_block_down(None)

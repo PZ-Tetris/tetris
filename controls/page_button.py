@@ -13,7 +13,7 @@ class PageButton(tk.Button):
     def __init__(self, parent, text, command=None, image=None, background="#484969"):
         super().__init__(parent)
         self.configure(background=background,
-                       foreground='#FFFFFF', width=15 if image is None else 64, text=text, image=image, command=command)
+                       foreground='#FFFFFF', width=12 if image is None else 48, text=text, image=image, command=command)
         self.sound_manager = SoundManager()
         
         self.bind("<Enter>", self.on_hover)
