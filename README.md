@@ -1,15 +1,31 @@
 # Tetris
 
-## dependencje:
+## Zależności:
 
-- python3
+- python3 (wersja 3.12)
 - tkinter (instalowany z repo systemu / nie dostępny w pip)
 
-## venv
+## Uruchamianie
 
-`python3 -m venv .venv --prompt tetris`
+### Windows
 
-`source .venv/bin/activate`
+```bash
+.\windows_start.ps1
+```
 
-`pip install -r requirement.txt`
-
+### Linux
+```bash
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.12
+sudo apt install python3.12-pip
+sudo apt install python3.12-distutils
+sudo apt install python3.12-venv
+sudo apt install python3.12-dev
+sudo apt install binutils
+sudo apt install python3.12-tk
+python3.12 -m ensurepip --upgrade
+python3.12 -m pip install --upgrade setuptools
+python3.12 -m pip install -r requirements.txt
+python3.12 -m pip install pyinstaller
+python3.12 ./app.py
+```
