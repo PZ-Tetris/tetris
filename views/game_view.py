@@ -113,10 +113,11 @@ class GameView(BaseView):
             x = self.canvas.winfo_width() // 2
             y = self.canvas.winfo_height() // 2 - 20
             for offset in [(-2, 0), (2, 0), (0, -2), (0, 2)]:
-self.canvas.create_text(
+                self.canvas.create_text(
                     x + offset[0], y + offset[1], text=game_over_text, font=("Helvetica", 36), fill="black")
-            self.canvas.create_text(
+                self.canvas.create_text(
                 x, y, text=game_over_text, font=("Helvetica", 36), fill="red")
+                
             self.sound_manager.play_music(MusicType.OVER)
             press_any_key_text = "Press any key to continue"
             y = self.canvas.winfo_height() // 2 + 20
@@ -196,16 +197,16 @@ self.canvas.create_text(
                 delay = int(self.random_speed * self.frame_delay_multiplier)
             else:
                 if 0 <= self.level <= 9:
-                delay = int(
+                    delay = int(
                     self.frames_delay[self.level] * self.frame_delay_multiplier)
-            elif 10 <= self.level <= 18:
-                delay = int(
+                elif 10 <= self.level <= 18:
+                    delay = int(
                     self.frames_delay[10 + (self.level - 10) // 2] * self.frame_delay_multiplier)
-            elif 19 <= self.level <= 28:
-                delay = int(self.frames_delay[-2]
-                            * self.frame_delay_multiplier)
-            else:
-                delay = int(self.frames_delay[-1]
+                elif 19 <= self.level <= 28:
+                    delay = int(self.frames_delay[-2]
+                                * self.frame_delay_multiplier)
+                else:
+                    delay = int(self.frames_delay[-1]
                             * self.frame_delay_multiplier)
 
             self.after(delay, lambda: self.move_block_down(counter + 1))
