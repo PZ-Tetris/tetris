@@ -31,3 +31,5 @@ python3.12 -m pip install --upgrade setuptools
 python3.12 -m pip install -r requirements.txt
 python3.12 ./app.py
 ```
+## music
+https://pandabeatsmusic.com/
