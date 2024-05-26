@@ -1,5 +1,4 @@
 import tkinter as tk
-import tkinterweb
 
 from controls.page_button import PageButton
 from views.base_view import BaseView
