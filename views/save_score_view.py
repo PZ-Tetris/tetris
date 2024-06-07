@@ -5,11 +5,15 @@ from views.base_view import BaseView
 
 
 class SaveScoreView(BaseView):
+    """Save score view
+    """
     def __init__(self, controller):
         super().__init__(controller)
         self.unbind_all('<KeyPress>')
 
     def __add_widgets(self):
+        """Add widgets to the page
+        """
         self.text_score = tk.Text(self, height=1, width=10, relief=tk.FLAT, background='#D9D9D9')
         self.text_score.grid(column=0, row=0, columnspan=2, sticky=tk.W+tk.E, pady=(50, 10))
         self.text_score.insert(tk.END, f"Score: {self.controller.score}")
@@ -24,11 +28,15 @@ class SaveScoreView(BaseView):
         self.save_button.grid(column=0, row=2, columnspan=2, pady=(10, 10))
 
     def save_score(self):
+        """Save score
+        """
         nick = self.text_input.get("1.0", "1.16").strip()
         self.controller.set_nick(nick)
         self.controller.save_score()
 
     def present(self):
+        """Show page content
+        """
         self.__add_widgets()
         self.pack()
         

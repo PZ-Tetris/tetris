@@ -6,10 +6,14 @@ from views.base_view import BaseView
 
 
 class MainView(BaseView):
+    """Main view
+    """
     def __init__(self, controller):
         super().__init__(controller)
 
     def __configure_grid(self):
+        """Configure grid settings
+        """
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=2)
         self.columnconfigure(2, weight=1)
@@ -23,6 +27,8 @@ class MainView(BaseView):
         self.rowconfigure(7, weight=1)
 
     def __add_widgets(self):
+        """Add widgets to the page
+        """
         self.im = Image.open("assets/example.jpg")
         new_size = (128, 128 * (float(self.im.height) / self.im.width))
         self.im.thumbnail(new_size, Image.Resampling.LANCZOS)
@@ -47,6 +53,8 @@ class MainView(BaseView):
         instruction_btn.grid(column=1, row=6, padx=1, pady=5)
 
     def present(self):
+        """Show page content
+        """
         self.__configure_grid()
         self.__add_widgets()
         self.pack()

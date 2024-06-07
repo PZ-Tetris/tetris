@@ -2,10 +2,17 @@ from entities.gameboard_entity import Gameboard
 from entities.block_entity import Block
 
 class MoveBlockInteractor():
+    """Move block logic interactor
+    """
     def __init__(self, gameboard: Gameboard):
         self.gameboard = gameboard
 
     def move_block_down(self, block: Block):
+        """Move the block down
+
+        Args:
+            block (Block): block element
+        """
         # Find the lowest active blocks in each column
         lowest_active_blocks = []
         for j in range(self.gameboard.game_matrix_width):
@@ -37,6 +44,11 @@ class MoveBlockInteractor():
                 self.gameboard.game_matrix[i][j] = (value, block_type, False)
 
     def move_block_left(self, block: Block):
+        """Move the block to the left
+
+        Args:
+            block (Block): block element
+        """
         # Find the most left active blocks in each row
         leftmost_active_blocks = []
         for i in range(self.gameboard.game_matrix_height):
@@ -62,6 +74,11 @@ class MoveBlockInteractor():
                     self.gameboard.game_matrix[i][j] = (False, '', False)  # Remove the old block
 
     def move_block_right(self, block: Block):
+        """Move block to the right
+
+        Args:
+            block (Block): block element
+        """
         # Find the most right active blocks in each row
         rightmost_active_blocks = []
         for i in range(self.gameboard.game_matrix_height):

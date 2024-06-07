@@ -4,6 +4,8 @@ from models.leaderboard_model import LeaderBoardModel
 
 
 class SaveScoreController:
+    """Controller for save score
+    """
     def __init__(self, main_view, score):
         self.nick = None
         self.score = score

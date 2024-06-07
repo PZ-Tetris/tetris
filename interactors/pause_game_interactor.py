@@ -3,12 +3,16 @@ from entities.block_entity import Block
 
 
 class PauseGameInteractor():
+    """Pause game interactor
+    """
     def __init__(self, gameboard: Gameboard):
         self.gameboard = gameboard
         self.paused_label_id = None
         self.additional_label_id = None
 
     def show_paused_message(self):
+        """Display paused game message
+        """
         x = self.gameboard.winfo_width() // 2
         y = self.gameboard.winfo_height() // 2 - 50
         self.paused_label_id = self.gameboard.create_text(x, y, text="Game Paused", font=("Helvetica", 24),
@@ -19,6 +23,8 @@ class PauseGameInteractor():
                                                               font=("Helvetica", 14), fill="black")
 
     def hide_paused_message(self):
+        """Hide paused game message
+        """
         self.gameboard.delete(self.paused_label_id)
         self.paused_label_id = None
         self.gameboard.delete(self.additional_label_id)

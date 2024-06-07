@@ -3,6 +3,8 @@ from entities.block_entity import Block
 
 
 class RotateBlockInteractor:
+    """Rotate block interactor
+    """
     def __init__(self, gameboard: Gameboard):
         self.gameboard = gameboard
         self.rotation_count = 0
@@ -66,6 +68,11 @@ class RotateBlockInteractor:
                                  [(0, 0), (-1, 0), (+2, 0), (-1, +2), (+2, -1)]]
 
     def generate_tetromino(self, center: tuple):
+        """Generate tetromino
+
+        Args:
+            center (tuple): the center position of the block
+        """
         matrix = self.matrix_dict.get(self.block_type)
 
         size = len(matrix[0])
@@ -97,6 +104,14 @@ class RotateBlockInteractor:
                             -1], True
 
     def tetromino_center(self, active_blocks: list):
+        """Calculate the tetromino center
+
+        Args:
+            active_blocks (list): list of the active blocks
+
+        Returns:
+            tuple: tetromino coords
+        """
         left_corner_y = min(coord[0] for coord in active_blocks)
         left_corner_x = min(coord[1] for coord in active_blocks)
 
@@ -119,6 +134,15 @@ class RotateBlockInteractor:
         return left_corner_y, left_corner_x
 
     def can_rotate(self, center: tuple, clockwise_rotation: bool = True):
+        """Determine whether the game object can be rotated 
+
+        Args:
+            center (tuple): position of the center of tetromino
+            clockwise_rotation (bool, optional): is clockwise rotation. Defaults to True.
+
+        Returns:
+            tuple: bool, wall_kick
+        """
         matrix = self.matrix_dict.get(self.block_type)
 
         size = len(matrix[0])
@@ -193,6 +217,11 @@ class RotateBlockInteractor:
         return False, (-1, -1)
 
     def rotate_block(self, block: Block):
+        """Rotate the block
+
+        Args:
+            block (Block): block element
+        """
         # Find the active blocks using the gameboard's attributes
         active_blocks = [(i, j) for i in range(self.gameboard.game_matrix_height)
                          for j in range(self.gameboard.game_matrix_width)
@@ -214,6 +243,14 @@ class RotateBlockInteractor:
         return
 
     def check_type_of_block(self, cords):
+        """Check the block type
+
+        Args:
+            cords (int[]): coordinates
+
+        Returns:
+            str: block type
+        """
         block_color = self.gameboard.game_matrix[cords[0]][cords[1]][1]
         if block_color == 'cyan':
             return 'I'
@@ -234,6 +271,11 @@ class RotateBlockInteractor:
 
     # Removing active block to generate rotated
     def removing_active_block(self, active_blocks):
+        """Remove active block to generate rotated
+
+        Args:
+            active_blocks (list): active blocks
+        """
         # Removing old block
         for x, y in active_blocks:
             self.gameboard.game_matrix[x][y] = (False, '', False)

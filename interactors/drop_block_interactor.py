@@ -4,10 +4,17 @@ from entities.gameboard_entity import Gameboard
 from entities.block_entity import Block
 
 class DropBlockInteractor():
+    """Interactor for drop block game logic
+    """
     def __init__(self, gameboard: Gameboard):
         self.gameboard = gameboard
 
     def drop_block(self, block: Block):
+        """Drop the block to the game view
+
+        Args:
+            block (Block): block element
+        """
         # Check if any move is possible
         can_move = True
         while can_move:

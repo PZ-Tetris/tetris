@@ -6,3 +6,4 @@ PyMuPDFb==1.24.3
 pygame==2.5.2
 python-dotenv==1.0.1
 requests==2.32.2
+pycco==0.6.0

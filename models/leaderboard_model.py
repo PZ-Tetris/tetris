@@ -1,4 +1,6 @@
 class LeaderBoardModel:
+    """Leaderboard model
+    """
     def __init__(self, id, nick, score):
         self.id = id
         self.nick = nick

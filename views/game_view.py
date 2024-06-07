@@ -14,6 +14,8 @@ from interactors.pause_game_interactor import PauseGameInteractor
 
 
 class GameView(BaseView):
+    """Game view
+    """
     def __init__(self, controller, is_random):
         self.controls_active = True
         self.paused = False
@@ -37,6 +39,8 @@ class GameView(BaseView):
         super().__init__(controller)
 
     def __add_widgets(self):
+        """Add widgets to the page
+        """
         self.columnconfigure([0, 1, 2], minsize=165)
 
         save_button = PageButton(
@@ -72,6 +76,11 @@ class GameView(BaseView):
         self.canvas.grid(column=0, columnspan=3, row=2, pady=10)
 
     def pause_game(self, event=None):
+        """Pause gameplay
+
+        Args:
+            event (_type_, optional): an event. Defaults to None.
+        """
         self.paused = not self.paused
         if self.paused:
             self.controls_active = False
@@ -86,6 +95,11 @@ class GameView(BaseView):
             self.sound_manager.unpause_music()
 
     def handle_keypress(self, event):
+        """Key press event handler
+
+        Args:
+            event (Event): key press event
+        """
         if self.controls_active:
             if event.keysym == 'Down':
                 self.move_block_interactor.move_block_down(event)
@@ -103,11 +117,18 @@ class GameView(BaseView):
                 self.score += (y2 - y1) * (self.level + 1)
 
     def any_key(self, event):
+        """Any key press event
+
+        Args:
+            event (Event): key press event
+        """
         if self.game_ended:
             self.sound_manager.play_music(MusicType.MENU)
             self.controller.open_save_score(self.score)
 
     def update(self):
+        """Update game view
+        """
         if self.game_ended:
             game_over_text = "GAME OVER"
             x = self.canvas.winfo_width() // 2
@@ -188,6 +209,11 @@ class GameView(BaseView):
             self.after(10, self.update)
 
     def move_block_down(self, counter):
+        """Move the block down
+
+        Args:
+            counter (_type_): block counter
+        """
         if self.move_block_down_counter + 1 == counter:
             if self.is_random:
                 self.elapsed_time = time() - self.start_time

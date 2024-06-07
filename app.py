@@ -6,6 +6,8 @@ import tkinter.font as tkFont
 
 
 class App(tk.Tk):
+    """App entrypoint
+    """
     WINDOW_WIDTH = 550
     WINDOW_HEIGHT = 650
 
@@ -16,6 +18,8 @@ class App(tk.Tk):
         self.present()
 
     def style(self):
+        """Global app styling
+        """
         self.title("PZ - Tetris")
         self.iconbitmap(
             './assets/icon.ico' if sys.platform.startswith('win') else '@./assets/icon.xbm')
@@ -27,6 +31,8 @@ class App(tk.Tk):
             self.option_add("*Font", default_font)
 
     def position(self):
+        """Position the app window at the screen center
+        """
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         window_geometry = helpers.calculate_center_of_screen_position(
@@ -36,6 +42,8 @@ class App(tk.Tk):
         self.resizable(False, False)
 
     def present(self):
+        """Present app content
+        """
         main = MainController()
         main.view.pack()
 

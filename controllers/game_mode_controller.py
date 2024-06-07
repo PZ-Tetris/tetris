@@ -3,11 +3,15 @@ from views.game_mode_view import GameModeView
 
 
 class GameModeController:
+    """Controller for the game mode logic
+    """
     def __init__(self, previousView):
         self.view = GameModeView(self)
         self.previousView = previousView
 
     def back_to_main(self):
+        """Method for returning to main page
+        """
         self.previousView.present()
         self.view.clear()
         self.view.destroy()

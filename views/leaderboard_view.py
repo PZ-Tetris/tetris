@@ -21,15 +21,21 @@ class Ordering(Enum):
 
 
 class LeaderBoardView(BaseView):
+    """Leaderboard view
+    """
     def __init__(self, controller):
         super().__init__(controller)
 
     def __configure_grid(self):
+        """Configure grid settings
+        """
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=5)
 
     def __add_widgets(self):
+        """Add widgets to the page
+        """
         self.up_arrow_img = ImageTk.PhotoImage(
             Image.open("assets/up_arrow.png"))
         self.down_arrow_img = ImageTk.PhotoImage(
@@ -44,7 +50,12 @@ class LeaderBoardView(BaseView):
         self.__add_tab()
 
     def __add_tab(self, ordering: Ordering = Ordering.DESC, ord_col: Column = Column.SCORE):
+        """Add tab
 
+        Args:
+            ordering (Ordering, optional): column ordering. Defaults to Ordering.DESC.
+            ord_col (Column, optional): currently ordered column. Defaults to Column.SCORE.
+        """
         arrow_down = ' ⇓'
         arrow_up = ' ⇑'
         arrow = arrow_down if ordering.value else arrow_up
@@ -69,13 +80,19 @@ class LeaderBoardView(BaseView):
                       padx=10, pady=10, sticky="ew")
 
     def __clear_tab(self):
+        """Clear tab content
+        """
         self.tab.destroy()
 
     def recreate_tab(self, ordering: Ordering, ord_col: Column):
+        """Recrate tab with new content
+        """
         self.__clear_tab()
         self.__add_tab(ordering, ord_col)
 
     def present(self):
+        """Present page details
+        """
         self.__configure_grid()
         self.__add_widgets()
         self.pack()

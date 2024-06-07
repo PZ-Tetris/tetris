@@ -3,6 +3,8 @@ from views.leaderboard_view import LeaderBoardView, Column, Ordering
 
 
 class LeaderBoardController:
+    """Controller for leaderboard logic
+    """
     def __init__(self, previousView):
         self.view = LeaderBoardView(self)
         self.previousView = previousView
@@ -36,6 +38,8 @@ class LeaderBoardController:
         self.view.recreate_tab(ordering, column)
 
     def back_to_main(self):
+        """Method for returning to main page
+        """
         self.previousView.present()
         self.view.clear()
         self.view.destroy()

@@ -1,6 +1,8 @@
 import tkinter as tk
 
 class Gameboard(tk.Canvas):
+    """Gameboard entity
+    """
     def __init__(self, master, width, height):
         super().__init__(master, width=width, height=height, background='gray75')
 

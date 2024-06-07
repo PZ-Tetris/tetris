@@ -6,6 +6,8 @@ from controllers.save_score_controller import SaveScoreController
 from tkinter import simpledialog
 
 class GameController:
+    """Controller for the game logic
+    """
     def __init__(self, previousView, is_random):
         self.view = GameView(self, is_random)
         self.previousView = previousView
@@ -13,6 +15,11 @@ class GameController:
         self.soun_manager = SoundManager()
 
     def save_result(self, score):
+        """Method for saving game results
+
+        Args:
+            score (_type_): the game result
+        """
         user_nick = simpledialog.askstring('Save results', "What's your nick?")
 
         if user_nick is not None:
@@ -22,16 +29,25 @@ class GameController:
 
     # PLACEHOLDER METHOD TO SHOW ALL BLOCKS
     def restart(self):
+        """Restart the game progress
+        """
         self.view.clear()
         self.view = GameView(self, self.is_random)
 
     def open_save_score(self, score):
+        """Method for navigation to the save score view
+
+        Args:
+            score (_type_): the game result
+        """
         ctrl = SaveScoreController(self.previousView, score)
         ctrl.view.present()
         self.view.clear()
         self.view.destroy()
 
     def back_to_main(self):
+        """Method for returning to main page
+        """
         self.previousView.present()
         self.view.clear()
         self.view.destroy()

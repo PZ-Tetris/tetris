@@ -5,10 +5,14 @@ from views.base_view import BaseView
 
 
 class AboutView(BaseView):
+    """About view
+    """
     def __init__(self, controller):
         super().__init__(controller)
 
     def __add_widgets(self):
+        """Add page widgets
+        """
         about_info = tk.LabelFrame(self, text="About", background='#D9D9D9')
         authors = tk.LabelFrame(about_info, text="Authors", background='#D9D9D9')
         technologies = tk.LabelFrame(
@@ -27,5 +31,7 @@ class AboutView(BaseView):
         technologies_txt.pack(padx=5, pady=5)
 
     def present(self):
+        """Add show page content
+        """
         self.__add_widgets()
         self.pack()
